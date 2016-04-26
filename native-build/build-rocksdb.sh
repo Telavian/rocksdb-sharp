@@ -60,7 +60,7 @@ if [[ $OSINFO == *"MSYS"* ]]; then
 		test -z "$RUNTESTS" || {
 			cmd //c "msbuild build/snappy.sln /p:Configuration=Debug /m:$CONCURRENCY" || fail "Build of snappy (debug config) failed"
 		}
-		cmd //c "msbuild build/snappy.sln /p:Configuration=Release /m:$CONCURRENCY" || fail "Build of snappy failed"
+		cmd //c "msbuild build/snappy.sln /p:Configuration=Debug /m:$CONCURRENCY" || fail "Build of snappy failed"
 	}) || fail "Snappy build failed"
 
 
@@ -74,7 +74,7 @@ if [[ $OSINFO == *"MSYS"* ]]; then
 		test -z "$RUNTESTS" || {
 			cmd //c "msbuild build/gflags.sln /p:Configuration=Debug /m:$CONCURRENCY" || fail "Build of gflags (debug config) failed"
 		}
-		cmd //c "msbuild build/gflags.sln /p:Configuration=Release /m:$CONCURRENCY" || fail "Build of gflags failed"
+		cmd //c "msbuild build/gflags.sln /p:Configuration=Debug /m:$CONCURRENCY" || fail "Build of gflags failed"
 	}) || fail "GFlags build failed"
 
 
@@ -190,9 +190,9 @@ if [[ $OSINFO == *"MSYS"* ]]; then
 			run_rocksdb_test transaction_test
 			run_rocksdb_test ldb_cmd_test
 		}
-		cmd //c "msbuild build/rocksdb.sln /p:Configuration=Release /m:$CONCURRENCY" || fail "Rocksdb release build failed"
+		cmd //c "msbuild build/rocksdblib.vcxproj /p:Configuration=Debug /m:$CONCURRENCY" || fail "Rocksdb debug build failed"
 		git checkout -- thirdparty.inc
-		mkdir -p ../../native/amd64 && cp -v ./build/Release/rocksdb.dll ../../native/amd64/librocksdb.dll
+		mkdir -p ../../native/amd64 && cp -v ./build/Debug/rocksdb.dll ../../native/amd64/librocksdb.dll
 	}) || fail "rocksdb build failed"
 elif [[ $OSDETECT == *"Darwin"* ]]; then
 	fail "Mac OSX build is not yet operational"
